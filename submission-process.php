@@ -1,10 +1,30 @@
 <?php
 
+	$validate = false;
+
 	require('functions.php');
 
 	if (!isset($_POST['submit'])){
 		redirect('form.php');
 	}
+
+	$n = $_POST['name'];
+		$e = $_POST['email'];
+		$m = $_POST['message'];
+
+		if (isset($_POST['submit'])){
+			if(validateEmail($e)==true && notEmpty($n)==true && notEmpty($e)==true && notEmpty($m)==true){
+				$validate=true;
+			}
+			else{
+				redirect('form.php');
+			}
+		}
+		else{
+			redirect('form.php');
+		}
+
+
 ?>
 
 <html>
@@ -24,20 +44,8 @@
 </head>
 <body>
 	<?php
-		$n = $_POST['name'];
-		$e = $_POST['email'];
-		$m = $_POST['message'];
-
-		if (isset($_POST['submit'])){
-			if(validateEmail($e)==true && notEmpty($n)==true && notEmpty($e)==true && notEmpty($m)==true){
-				echo '<p>Thank you for your submission</p>';
-			}
-			else{
-				redirect('form.php');
-			}
-		}
-		else{
-			redirect('form.php');
+		if ($validate==true){
+			echo '<p>Thank you for your submission</p>';
 		}
 	?>
 </body>
